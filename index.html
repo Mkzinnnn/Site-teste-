@@ -2,54 +2,107 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Sorteio</title>
+  <title>Sorteio Inteligente</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 100px;
-      background-color: #f2f2f2;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
     }
 
     .container {
       background: white;
-      padding: 30px;
-      border-radius: 10px;
-      display: inline-block;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
     }
 
     button {
-      padding: 10px 20px;
+      margin-top: 20px;
+      padding: 12px 25px;
       font-size: 16px;
-      background-color: #4CAF50;
-      color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
+      background: #4facfe;
+      color: white;
       cursor: pointer;
+      transition: 0.3s;
     }
 
-    #resultado {
-      margin-top: 20px;
-      font-size: 24px;
+    button:hover {
+      background: #007bff;
+    }
+
+    #numero {
+      font-size: 50px;
+      margin-top: 30px;
       font-weight: bold;
       color: #333;
+    }
+
+    #contador {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #888;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>Sorteio</h1>
-    <p>Clique no botão para sortear um número</p>
+    <h1>Sorteio 🎲</h1>
+    <p>Clique para sortear um número</p>
+
     <button onclick="sortear()">Sortear</button>
-    <div id="resultado"></div>
+
+    <div id="numero">?</div>
+    <div id="contador">Sorteios: 0</div>
   </div>
 
   <script>
+    let quantidadeSorteios = 0;
+
+    function animarNumero(finalNumero) {
+      let contador = 0;
+      let intervalo = setInterval(() => {
+        document.getElementById("numero").innerText = Math.floor(Math.random() * 100);
+        contador++;
+
+        if (contador > 15) {
+          clearInterval(intervalo);
+          document.getElementById("numero").innerText = finalNumero;
+        }
+      }, 50);
+    }
+
     function sortear() {
-      let numero = 27; // sempre será 27
-      document.getElementById("resultado").innerText = "Número sorteado: " + numero;
+      quantidadeSorteios++;
+
+      let numeroFinal;
+
+      if (quantidadeSorteios <= 2) {
+        numeroFinal = 27;
+      } else {
+        numeroFinal = Math.floor(Math.random() * 100) + 1;
+      }
+
+      animarNumero(numeroFinal);
+
+      document.getElementById("contador").innerText =
+        "Sorteios: " + quantidadeSorteios;
     }
   </script>
 
