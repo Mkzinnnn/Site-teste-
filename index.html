@@ -1,571 +1,516 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mmm... Doces | O sabor da felicidade</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Definição da paleta de cores pedida */
+        :root {
+            --main-brown: #5c3d2e;      /* Marrom para textos principais e detalhes */
+            --text-brown: #704238;      /* Marrom mais suave para textos longos */
+            --pink-pastel: #fbcbc9;     /* Rosa bebê */
+            --green-pastel: #e3eed8;    /* Verde bebê */
+            --yellow-pastel: #fef5d1;   /* Variante pastel */
+            --bg-cream: #faf7f2;        /* Branco off-white suave de fundo */
+            --white: #ffffff;
+        }
 
-<meta charset="UTF-8">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-brown);
+            scroll-behavior: smooth;
+        }
 
-<title>Mmm... Doces!</title>
+        /* Cabeçalho */
+        header {
+            background-color: var(--white);
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            z-index: 100;
+        }
 
-<link rel="stylesheet"
-href="style.css">
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--main-brown);
+            font-style: italic;
+        }
 
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
+        nav a {
+            text-decoration: none;
+            color: var(--text-brown);
+            margin: 0 15px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
 
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
+        nav a:hover {
+            color: var(--pink-pastel);
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
+        .cart-icon {
+            font-size: 20px;
+            color: var(--main-brown);
+            cursor: pointer;
+            position: relative;
+            background-color: var(--green-pastel);
+            padding: 10px 15px;
+            border-radius: 20px;
+            transition: transform 0.2s;
+        }
 
+        .cart-icon:hover {
+            transform: scale(1.05);
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--pink-pastel);
+            color: var(--main-brown);
+            font-size: 12px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Banner Principal */
+        .hero {
+            background: linear-gradient(135deg, var(--pink-pastel) 0%, var(--green-pastel) 100%);
+            padding: 100px 8%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 42px;
+            color: var(--main-brown);
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: var(--main-brown);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--main-brown);
+            color: var(--white);
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--text-brown);
+        }
+
+        /* Vitrine de Produtos */
+        .products-section {
+            padding: 60px 8%;
+        }
+
+        .products-section h2 {
+            text-align: center;
+            color: var(--main-brown);
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 11px;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: var(--main-brown);
+        }
+
+        .product-badge.pink { background-color: var(--pink-pastel); }
+        .product-badge.green { background-color: var(--green-pastel); }
+        .product-badge.brown { background-color: #e6ccb2; }
+        .product-badge.yellow { background-color: var(--yellow-pastel); }
+
+        /* Espaço provisório para imagem (Ícones lúdicos de doces) */
+        .product-image-placeholder {
+            height: 150px;
+            background-color: var(--bg-cream);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            color: var(--pink-pastel);
+        }
+
+        .product-card h3 {
+            font-size: 20px;
+            color: var(--main-brown);
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            font-size: 14px;
+            margin-bottom: 15px;
+            height: 40px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--main-brown);
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart {
+            background-color: var(--green-pastel);
+            color: var(--main-brown);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--pink-pastel);
+        }
+
+        /* Seção Sobre Nós */
+        .about-section {
+            background-color: var(--white);
+            padding: 60px 8%;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content h2 {
+            color: var(--main-brown);
+            margin-bottom: 20px;
+        }
+
+        /* Modal do Carrinho */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-modal-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--main-brown);
+        }
+
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--bg-cream);
+        }
+
+        .cart-total {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+            color: var(--main-brown);
+        }
+
+        .checkout-btn {
+            background-color: var(--main-brown);
+            color: var(--white);
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: var(--main-brown);
+            color: var(--white);
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* Responsividade Básica para Celulares */
+        @media (max-width: 600px) {
+            header { flex-direction: column; gap: 15px; text-align: center; }
+            .hero-content h1 { font-size: 30px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-
-<div class="container nav">
-
-<div class="logo-area">
-
-<img src="logo.png"
-alt="Mmm Doces">
-
-<div>
-
-<h1>Mmm... Doces!</h1>
-
-<p class="tagline">
-Doces artesanais feitos com amor
-</p>
-
-</div>
-
-</div>
-
-<nav>
-
-<a href="#inicio">Início</a>
-
-<a href="#produtos">Produtos</a>
-
-<a href="#sobre">Sobre</a>
-
-<a href="#avaliacoes">Avaliações</a>
-
-<a href="#contato">Contato</a>
-
-</nav>
-
-<button id="cartBtn"
-class="cart-btn">
-
-🛒
-
-<span id="cartCount">
-0
-</span>
-
-</button>
-
-</div>
-
-</header>
-
-<section id="inicio"
-class="hero">
-
-<div class="hero-content">
-
-<span class="badge">
-✨ Doces Artesanais
-</span>
-
-<h2>
-
-Transformando momentos em
-memórias doces
-
-</h2>
-
-<p>
-
-Brigadeiros, bolos,
-tortas e kits especiais
-para deixar qualquer
-ocasião inesquecível.
-
-</p>
-
-<a href="#produtos"
-class="hero-btn">
-
-Ver Cardápio
-
-</a>
-
-</div>
-
-</section>
-
-<section class="stats">
-
-<div class="stat-box">
-
-<h3>+1000</h3>
-
-<p>Pedidos Entregues</p>
-
-</div>
-
-<div class="stat-box">
-
-<h3>+500</h3>
-
-<p>Clientes Felizes</p>
-
-</div>
-
-<div class="stat-box">
-
-<h3>5★</h3>
-
-<p>Avaliação Média</p>
-
-</div>
-
-</section>
-
-<section id="produtos"
-class="products">
-
-<div class="container">
-
-<h2>
-Nosso Cardápio
-</h2>
-
-<div class="filter-buttons">
-
-<button
-class="filter active"
-data-category="all">
-
-Todos
-
-</button>
-
-<button
-class="filter"
-data-category="brigadeiros">
-
-Brigadeiros
-
-</button>
-
-<button
-class="filter"
-data-category="bolos">
-
-Bolos
-
-</button>
-
-<button
-class="filter"
-data-category="tortas">
-
-Tortas
-
-</button>
-
-</div>
-
-<div class="product-grid">
-
-<div class="product-card"
-data-category="brigadeiros">
-
-<div class="product-image">
-🍫
-</div>
-
-<h3>
-Brigadeiro Tradicional
-</h3>
-
-<p>
-Brigadeiro artesanal.
-</p>
-
-<span class="price">
-R$ 4,50
-</span>
-
-<button
-class="add-cart"
-data-name="Brigadeiro Tradicional"
-data-price="4.50">
-
-Adicionar
-
-</button>
-
-</div>
-
-<div class="product-card"
-data-category="brigadeiros">
-
-<div class="product-image">
-🍓
-</div>
-
-<h3>
-Brigadeiro de Morango
-</h3>
-
-<p>
-Super cremoso.
-</p>
-
-<span class="price">
-R$ 5,00
-</span>
-
-<button
-class="add-cart"
-data-name="Brigadeiro de Morango"
-data-price="5">
-
-Adicionar
-
-</button>
-
-</div>
-
-<div class="product-card"
-data-category="bolos">
-
-<div class="product-image">
-🎂
-</div>
-
-<h3>
-Bolo de Cenoura
-</h3>
-
-<p>
-Cobertura de chocolate.
-</p>
-
-<span class="price">
-R$ 65,00
-</span>
-
-<button
-class="add-cart"
-data-name="Bolo de Cenoura"
-data-price="65">
-
-Adicionar
-
-</button>
-
-</div>
-
-<div class="product-card"
-data-category="bolos">
-
-<div class="product-image">
-🍰
-</div>
-
-<h3>
-Red Velvet
-</h3>
-
-<p>
-Recheio especial.
-</p>
-
-<span class="price">
-R$ 80,00
-</span>
-
-<button
-class="add-cart"
-data-name="Red Velvet"
-data-price="80">
-
-Adicionar
-
-</button>
-
-</div>
-
-<div class="product-card"
-data-category="tortas">
-
-<div class="product-image">
-🥧
-</div>
-
-<h3>
-Torta de Limão
-</h3>
-
-<p>
-Massa crocante.
-</p>
-
-<span class="price">
-R$ 55,00
-</span>
-
-<button
-class="add-cart"
-data-name="Torta de Limão"
-data-price="55">
-
-Adicionar
-
-</button>
-
-</div>
-
-<div class="product-card"
-data-category="tortas">
-
-<div class="product-image">
-🥭
-</div>
-
-<h3>
-Torta de Maracujá
-</h3>
-
-<p>
-Refrescante.
-</p>
-
-<span class="price">
-R$ 58,00
-</span>
-
-<button
-class="add-cart"
-data-name="Torta de Maracujá"
-data-price="58">
-
-Adicionar
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="sobre"
-class="about">
-
-<div class="container">
-
-<h2>
-Nossa História
-</h2>
-
-<p>
-
-A Mmm... Doces nasceu
-com a missão de transformar
-momentos simples em lembranças
-inesquecíveis através de doces
-artesanais feitos com carinho.
-
-</p>
-
-</div>
-
-</section>
-
-<section
-id="avaliacoes"
-class="reviews">
-
-<div class="container">
-
-<h2>
-
-Clientes Apaixonados
-
-</h2>
-
-<div class="reviews-grid">
-
-<div class="review-card">
-
-★★★★★
-
-<p>
-
-Os melhores brigadeiros
-que já experimentei.
-
-</p>
-
-<strong>
-Mariana
-</strong>
-
-</div>
-
-<div class="review-card">
-
-★★★★★
-
-<p>
-
-Entrega rápida
-e tudo muito caprichado.
-
-</p>
-
-<strong>
-Carlos
-</strong>
-
-</div>
-
-<div class="review-card">
-
-★★★★★
-
-<p>
-
-Os bolos são incríveis.
-
-</p>
-
-<strong>
-Ana
-</strong>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="contato"
-class="contact">
-
-<div class="container">
-
-<h2>
-
-Faça seu Pedido
-
-</h2>
-
-<p>
-
-Clique abaixo e fale
-conosco pelo WhatsApp.
-
-</p>
-
-<a
-href="https://wa.me/5538991478923"
-target="_blank"
-class="whatsapp-btn">
-
-Pedir Agora
-
-</a>
-
-</div>
-
-</section>
-
-<footer>
-
-<p>
-
-© 2026 Mmm... Doces
-
-</p>
-
-</footer>
-
-<div
-id="cartSidebar"
-class="cart-sidebar">
-
-<div class="cart-header">
-
-<h3>
-Seu Carrinho
-</h3>
-
-<button
-id="closeCart">
-
-✕
-
-</button>
-
-</div>
-
-<div id="cartItems">
-
-</div>
-
-<div class="cart-footer">
-
-<h4>
-
-Total:
-<span id="cartTotal">
-R$ 0,00
-</span>
-
-</h4>
-
-<button id="finishOrder">
-
-Finalizar Pedido
-
-</button>
-
-</div>
-
-</div>
-
-<div id="overlay">
-
-</div>
-
-<a
-href="https://wa.me/5538991478923"
-target="_blank"
-class="floating-whatsapp">
-
-💬
-
-</a>
-
-<script src="script.js"></script>
-
+    <header>
+        <div class="logo">Mmm... Doces</div>
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#produtos">Doces</a>
+            <a href="#sobre">Sobre Nós</a>
+        </nav>
+        <div class="cart-icon" id="cart-button">
+            <i class="fas fa-shopping-basket"></i>
+            <span id="cart-count">0</span>
+        </div>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Um mundo mais doce e colorido</h1>
+            <p>Feito à mão, com amor e as melhores cores pastéis da vida.</p>
+            <a href="#produtos" class="btn">Ver Cardápio</a>
+        </div>
+    </section>
+
+    <section id="produtos" class="products-section">
+        <h2>Nossas Delícias</h2>
+        <div class="products-grid">
+            
+            <div class="product-card">
+                <div class="product-badge pink">Destaque</div>
+                <div class="product-image-placeholder"><i class="fas fa-cookie-bite"></i></div>
+                <h3>Cupcake de Baunilha</h3>
+                <p>Massa fofinha com cobertura de creme rosa bebê e granulados.</p>
+                <div class="product-price">R$ 12,00</div>
+                <button class="add-to-cart" data-name="Cupcake de Baunilha" data-price="12.00">Adicionar</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-badge green">Artesanal</div>
+                <div class="product-image-placeholder"><i class="fas fa-ice-cream"></i></div>
+                <h3>Macaron de Pistache</h3>
+                <p>O clássico doce francês na nossa linda versão verde bebê.</p>
+                <div class="product-price">R$ 8,00</div>
+                <button class="add-to-cart" data-name="Macaron de Pistache" data-price="8.00">Adicionar</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-badge brown">Favorito</div>
+                <div class="product-image-placeholder"><i class="fas fa-birthday-cake"></i></div>
+                <h3>Brownie Supremo</h3>
+                <p>Muito chocolate marrom intenso com pedaços de nozes.</p>
+                <div class="product-price">R$ 10,50</div>
+                <button class="add-to-cart" data-name="Brownie Supremo" data-price="10.50">Adicionar</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-badge yellow">Novo</div>
+                <div class="product-image-placeholder"><i class="fas fa-donut"></i></div>
+                <h3>Donut Premium</h3>
+                <p>Donut artesanal com glassado pastel e recheio cremoso.</p>
+                <div class="product-price">R$ 9,00</div>
+                <button class="add-to-cart" data-name="Donut Premium" data-price="9.00">Adicionar</button>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="sobre" class="about-section">
+        <div class="about-content">
+            <h2>Sobre a Mmm... Doces</h2>
+            <p>Nascemos do desejo de colorir a vida com sabores suaves e momentos inesquecíveis. Cada doce é planejado artisticamente usando tons pastéis e ingredientes de altíssima qualidade, unindo a doçura do rosa e verde bebê com o conforto do nosso chocolate marrom.</p>
+        </div>
+    </section>
+
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-modal-content">
+            <span class="close-modal" id="close-cart">&times;</span>
+            <h3>Seu Carrinho</h3>
+            <div id="cart-items">
+                <p style="color: var(--text-brown); text-align: center;">Seu carrinho está vazio.</p>
+            </div>
+            <div class="cart-total">
+                Total: <span id="cart-total-value">R$ 0,00</span>
+            </div>
+            <button class="checkout-btn" id="checkout-button">Finalizar Pedido</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Mmm... Doces. Todos os direitos reservados.</p>
+        <p>Feito com <i class="fas fa-heart" style="color: var(--pink-pastel);"></i> para o mundo.</p>
+    </footer>
+
+    <script>
+        let cart = [];
+
+        const cartButton = document.getElementById('cart-button');
+        const cartModal = document.getElementById('cart-modal');
+        const closeCart = document.getElementById('close-cart');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotalValue = document.getElementById('cart-total-value');
+        const cartCount = document.getElementById('cart-count');
+        const checkoutButton = document.getElementById('checkout-button');
+
+        // Abrir carrinho
+        cartButton.addEventListener('click', () => {
+            cartModal.style.display = 'flex';
+        });
+
+        // Fechar carrinho
+        closeCart.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+
+        // Fechar se clicar fora do modal
+        window.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.style.display = 'none';
+            }
+        });
+
+        // Adicionar ao carrinho
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const name = button.getAttribute('data-name');
+                const price = parseFloat(button.getAttribute('data-price'));
+                
+                addItemToCart(name, price);
+            });
+        });
+
+        function addItemToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            
+            updateCartUI();
+        }
+
+        // Atualizar a interface do carrinho
+        function updateCartUI() {
+            const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p style="color: var(--text-brown); text-align: center;">Seu carrinho está vazio.</p>';
+                cartTotalValue.textContent = 'R$ 0,00';
+                return;
+            }
+            
+            let totalValue = 0;
+            
+            cart.forEach(item => {
+                const itemRow = document.createElement('div');
+                itemRow.classList.add('cart-item-row');
+                
+                const itemTotal = item.price * item.quantity;
+                totalValue += itemTotal;
+                
+                itemRow.innerHTML = `
+                    <div>
+                        <strong>${item.name}</strong> <br>
+                        <small>${item.quantity}x R$ ${item.price.toFixed(2).replace('.', ',')}</small>
+                    </div>
+                    <span>R$ ${itemTotal.toFixed(2).replace('.', ',')}</span>
+                `;
+                
+                cartItemsContainer.appendChild(itemRow);
+            });
+            
+            cartTotalValue.textContent = `R$ ${totalValue.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Finalizar pedido
+        checkoutButton.addEventListener('click', () => {
+            if(cart.length === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+            alert("Mmm... Pedido simulado com sucesso! Obrigado por comprar na Mmm... Doces.");
+            cart = [];
+            updateCartUI();
+            cartModal.style.display = 'none';
+        });
+    </script>
 </body>
-    </html>
+</html>
