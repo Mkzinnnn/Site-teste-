@@ -1,516 +1,338 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mmm... Doces | O sabor da felicidade</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* Definição da paleta de cores pedida */
-        :root {
-            --main-brown: #5c3d2e;      /* Marrom para textos principais e detalhes */
-            --text-brown: #704238;      /* Marrom mais suave para textos longos */
-            --pink-pastel: #fbcbc9;     /* Rosa bebê */
-            --green-pastel: #e3eed8;    /* Verde bebê */
-            --yellow-pastel: #fef5d1;   /* Variante pastel */
-            --bg-cream: #faf7f2;        /* Branco off-white suave de fundo */
-            --white: #ffffff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vale das Cerejeiras</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-        body {
-            background-color: var(--bg-cream);
-            color: var(--text-brown);
-            scroll-behavior: smooth;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
 
-        /* Cabeçalho */
-        header {
-            background-color: var(--white);
-            padding: 20px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            z-index: 100;
-        }
+body{
+background: radial-gradient(circle at top, #1a0026, #0d001a);
+color:white;
+overflow-x:hidden;
+}
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--main-brown);
-            font-style: italic;
-        }
+/* pétalas */
+.petal{
+position:fixed;
+top:-10px;
+width:10px;
+height:10px;
+background:pink;
+border-radius:50%;
+opacity:0.6;
+animation:fall linear infinite;
+}
 
-        nav a {
-            text-decoration: none;
-            color: var(--text-brown);
-            margin: 0 15px;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
+@keyframes fall{
+to{transform:translateY(110vh) rotate(360deg);}
+}
 
-        nav a:hover {
-            color: var(--pink-pastel);
-        }
+/* partículas */
+.sparkle{
+position:fixed;
+width:4px;
+height:4px;
+background:white;
+border-radius:50%;
+opacity:0.8;
+animation:spark 3s infinite;
+}
 
-        .cart-icon {
-            font-size: 20px;
-            color: var(--main-brown);
-            cursor: pointer;
-            position: relative;
-            background-color: var(--green-pastel);
-            padding: 10px 15px;
-            border-radius: 20px;
-            transition: transform 0.2s;
-        }
+@keyframes spark{
+0%{transform:translateY(0);}
+100%{transform:translateY(100vh);}
+}
 
-        .cart-icon:hover {
-            transform: scale(1.05);
-        }
+/* animação */
+.fade{
+opacity:0;
+transform:translateY(40px);
+transition:1s;
+}
+.fade.show{
+opacity:1;
+transform:translateY(0);
+}
 
-        #cart-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--pink-pastel);
-            color: var(--main-brown);
-            font-size: 12px;
-            font-weight: bold;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+/* líder */
+.lider-card{
+border:2px solid gold;
+box-shadow:0 0 25px gold;
+position:relative;
+}
 
-        /* Banner Principal */
-        .hero {
-            background: linear-gradient(135deg, var(--pink-pastel) 0%, var(--green-pastel) 100%);
-            padding: 100px 8%;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.lider-card::before{
+content;
+position:absolute;
+top:-15px;
+left:15px;
+font-size:24px;
+transform:rotate(-25deg);
+}
 
-        .hero-content h1 {
-            font-size: 42px;
-            color: var(--main-brown);
-            margin-bottom: 20px;
-        }
+.lider{
+color:gold;
+text-shadow:0 0 10px gold;
+}
 
-        .hero-content p {
-            font-size: 18px;
-            margin-bottom: 30px;
-            color: var(--main-brown);
-        }
+/* vices */
+.vice-card{
+border:2px solid gold;
+box-shadow:0 0 15px gold;
+}
 
-        .btn {
-            display: inline-block;
-            background-color: var(--main-brown);
-            color: var(--white);
-            padding: 12px 30px;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
+.vice{
+color:#ff4fd8;
+text-shadow:0 0 10px #ff4fd8;
+}
 
-        .btn:hover {
-            background-color: var(--text-brown);
-        }
+/* layout */
+.cards{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+}
 
-        /* Vitrine de Produtos */
-        .products-section {
-            padding: 60px 8%;
-        }
+.card{
+background:#111;
+padding:30px;
+width:220px;
+border-radius:15px;
+box-shadow:0 0 20px #ff00cc;
+transition:0.4s;
+}
 
-        .products-section h2 {
-            text-align: center;
-            color: var(--main-brown);
-            font-size: 32px;
-            margin-bottom: 40px;
-        }
+.card:hover{
+transform:scale(1.08);
+}
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
+header{
+text-align:center;
+padding:60px;
+background:linear-gradient(90deg,#ff00cc,#8000ff);
+}
 
-        .product-card {
-            background-color: var(--white);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
-            border: 1px solid rgba(0,0,0,0.02);
-        }
+nav{
+background:black;
+padding:15px;
+text-align:center;
+}
 
-        .product-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            font-size: 11px;
-            text-transform: uppercase;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-            color: var(--main-brown);
-        }
+nav a{
+color:#ff4dff;
+margin:0 15px;
+text-decoration:none;
+font-weight:bold;
+}
 
-        .product-badge.pink { background-color: var(--pink-pastel); }
-        .product-badge.green { background-color: var(--green-pastel); }
-        .product-badge.brown { background-color: #e6ccb2; }
-        .product-badge.yellow { background-color: var(--yellow-pastel); }
+section{
+padding:60px 20px;
+text-align:center;
+}
 
-        /* Espaço provisório para imagem (Ícones lúdicos de doces) */
-        .product-image-placeholder {
-            height: 150px;
-            background-color: var(--bg-cream);
-            border-radius: 10px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 50px;
-            color: var(--pink-pastel);
-        }
+ul{
+list-style:none;
+max-width:500px;
+margin:auto;
+text-align:left;
+}
 
-        .product-card h3 {
-            font-size: 20px;
-            color: var(--main-brown);
-            margin-bottom: 10px;
-        }
+ul li{
+margin:10px 0;
+}
 
-        .product-card p {
-            font-size: 14px;
-            margin-bottom: 15px;
-            height: 40px;
-        }
+/* botão servidor */
+.server-btn{
+margin-top:20px;
+padding:12px 20px;
+background:linear-gradient(90deg,#ff00cc,#8000ff);
+border:none;
+border-radius:10px;
+color:white;
+cursor:pointer;
+}
 
-        .product-price {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--main-brown);
-            margin-bottom: 15px;
-        }
+/* 🌐 redes sociais */
+.social{
+margin-top:20px;
+}
 
-        .add-to-cart {
-            background-color: var(--green-pastel);
-            color: var(--main-brown);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            transition: background 0.2s;
-        }
+.social-btn{
+display:inline-block;
+margin:10px;
+padding:12px 20px;
+border-radius:10px;
+text-decoration:none;
+color:white;
+font-weight:bold;
+transition:0.3s;
+}
 
-        .add-to-cart:hover {
-            background-color: var(--pink-pastel);
-        }
 
-        /* Seção Sobre Nós */
-        .about-section {
-            background-color: var(--white);
-            padding: 60px 8%;
-            text-align: center;
-        }
+.social-btn:hover{
+transform:scale(1.1);
+}
 
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+/* form */
+form{
+max-width:400px;
+margin:auto;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
 
-        .about-content h2 {
-            color: var(--main-brown);
-            margin-bottom: 20px;
-        }
+input,textarea{
+padding:10px;
+border:none;
+border-radius:8px;
+}
 
-        /* Modal do Carrinho */
-        .cart-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.4);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
+button{
+padding:10px;
+border:none;
+border-radius:8px;
+background:#ff00cc;
+color:white;
+cursor:pointer;
+}
 
-        .cart-modal-content {
-            background-color: var(--white);
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 450px;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            cursor: pointer;
-            color: var(--main-brown);
-        }
-
-        .cart-item-row {
-            display: flex;
-            justify-content: space-between;
-            margin: 15px 0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--bg-cream);
-        }
-
-        .cart-total {
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 18px;
-            text-align: right;
-            color: var(--main-brown);
-        }
-
-        .checkout-btn {
-            background-color: var(--main-brown);
-            color: var(--white);
-            border: none;
-            width: 100%;
-            padding: 12px;
-            border-radius: 25px;
-            font-weight: bold;
-            margin-top: 20px;
-            cursor: pointer;
-        }
-
-        /* Rodapé */
-        footer {
-            background-color: var(--main-brown);
-            color: var(--white);
-            text-align: center;
-            padding: 30px;
-            font-size: 14px;
-        }
-
-        footer p {
-            margin: 5px 0;
-        }
-
-        /* Responsividade Básica para Celulares */
-        @media (max-width: 600px) {
-            header { flex-direction: column; gap: 15px; text-align: center; }
-            .hero-content h1 { font-size: 30px; }
-        }
-    </style>
+.success{
+display:none;
+color:#00ffcc;
+margin-top:15px;
+}
+</style>
 </head>
+
 <body>
 
-    <header>
-        <div class="logo">Mmm... Doces</div>
-        <nav>
-            <a href="#inicio">Início</a>
-            <a href="#produtos">Doces</a>
-            <a href="#sobre">Sobre Nós</a>
-        </nav>
-        <div class="cart-icon" id="cart-button">
-            <i class="fas fa-shopping-basket"></i>
-            <span id="cart-count">0</span>
-        </div>
-    </header>
+<header>
+<h1>🌸aprenedendo a programar com IA🌸</h1>
+<p>Leia as regras e matricule-se</p>
 
-    <section id="inicio" class="hero">
-        <div class="hero-content">
-            <h1>Um mundo mais doce e colorido</h1>
-            <p>Feito à mão, com amor e as melhores cores pastéis da vida.</p>
-            <a href="#produtos" class="btn">Ver Cardápio</a>
-        </div>
-    </section>
+<!-- 🔥 REDES -->
+<div class="social">
 
-    <section id="produtos" class="products-section">
-        <h2>Nossas Delícias</h2>
-        <div class="products-grid">
-            
-            <div class="product-card">
-                <div class="product-badge pink">Destaque</div>
-                <div class="product-image-placeholder"><i class="fas fa-cookie-bite"></i></div>
-                <h3>Cupcake de Baunilha</h3>
-                <p>Massa fofinha com cobertura de creme rosa bebê e granulados.</p>
-                <div class="product-price">R$ 12,00</div>
-                <button class="add-to-cart" data-name="Cupcake de Baunilha" data-price="12.00">Adicionar</button>
-            </div>
+</div>
 
-            <div class="product-card">
-                <div class="product-badge green">Artesanal</div>
-                <div class="product-image-placeholder"><i class="fas fa-ice-cream"></i></div>
-                <h3>Macaron de Pistache</h3>
-                <p>O clássico doce francês na nossa linda versão verde bebê.</p>
-                <div class="product-price">R$ 8,00</div>
-                <button class="add-to-cart" data-name="Macaron de Pistache" data-price="8.00">Adicionar</button>
-            </div>
+</header>
 
-            <div class="product-card">
-                <div class="product-badge brown">Favorito</div>
-                <div class="product-image-placeholder"><i class="fas fa-birthday-cake"></i></div>
-                <h3>Brownie Supremo</h3>
-                <p>Muito chocolate marrom intenso com pedaços de nozes.</p>
-                <div class="product-price">R$ 10,50</div>
-                <button class="add-to-cart" data-name="Brownie Supremo" data-price="10.50">Adicionar</button>
-            </div>
+<nav>
+<a href="#membros">Membros</a>
+<a href="#regras">Regras</a>
+<a href="#recrutamento">Recrutamento</a>
+</nav>
 
-            <div class="product-card">
-                <div class="product-badge yellow">Novo</div>
-                <div class="product-image-placeholder"><i class="fas fa-donut"></i></div>
-                <h3>Donut Premium</h3>
-                <p>Donut artesanal com glassado pastel e recheio cremoso.</p>
-                <div class="product-price">R$ 9,00</div>
-                <button class="add-to-cart" data-name="Donut Premium" data-price="9.00">Adicionar</button>
-            </div>
+<section id="membros" class="fade">
+<h2>⚔️ Membros</h2>
 
-        </div>
-    </section>
+<div class="cards">
 
-    <section id="sobre" class="about-section">
-        <div class="about-content">
-            <h2>Sobre a Mmm... Doces</h2>
-            <p>Nascemos do desejo de colorir a vida com sabores suaves e momentos inesquecíveis. Cada doce é planejado artisticamente usando tons pastéis e ingredientes de altíssima qualidade, unindo a doçura do rosa e verde bebê com o conforto do nosso chocolate marrom.</p>
-        </div>
-    </section>
+<div class="card lider-card">
+<h3>professor</h3>
+<p class="professor">Lucimario</p>
+</div>
 
-    <div class="cart-modal" id="cart-modal">
-        <div class="cart-modal-content">
-            <span class="close-modal" id="close-cart">&times;</span>
-            <h3>Seu Carrinho</h3>
-            <div id="cart-items">
-                <p style="color: var(--text-brown); text-align: center;">Seu carrinho está vazio.</p>
-            </div>
-            <div class="cart-total">
-                Total: <span id="cart-total-value">R$ 0,00</span>
-            </div>
-            <button class="checkout-btn" id="checkout-button">Finalizar Pedido</button>
-        </div>
-    </div>
+<div class="card vice-card">
+<h3>aluno 1</h3>
+<p class="aluno 1">mayck</p>
+</div>
 
-    <footer>
-        <p>&copy; 2026 Mmm... Doces. Todos os direitos reservados.</p>
-        <p>Feito com <i class="fas fa-heart" style="color: var(--pink-pastel);"></i> para o mundo.</p>
-    </footer>
+<div class="card vice-card">
+<h3>aluno 2</h3>
+<p class="aluno 2">Ryan</p>
+</div>
 
-    <script>
-        let cart = [];
+<div class="card vice-card">
+<h3>aluno 3</h3>
+<p class="aluno 3">George</p>
+</div>
 
-        const cartButton = document.getElementById('cart-button');
-        const cartModal = document.getElementById('cart-modal');
-        const closeCart = document.getElementById('close-cart');
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotalValue = document.getElementById('cart-total-value');
-        const cartCount = document.getElementById('cart-count');
-        const checkoutButton = document.getElementById('checkout-button');
+<div class="card vice-card">
+    <h3>aluno 4</h3>
+    <p class="aluno 4">Miguel Fabiano</p>
+</div>
 
-        // Abrir carrinho
-        cartButton.addEventListener('click', () => {
-            cartModal.style.display = 'flex';
-        });
+</div>
+</section>
 
-        // Fechar carrinho
-        closeCart.addEventListener('click', () => {
-            cartModal.style.display = 'none';
-        });
+<section id="regras" class="fade">
+<h2>📜 Regras</h2>
+<ul>
+<li>✔ Respeitar todos</li>
+<li>✔ Obedecer os professores</li>
+<li>✔ Proibido preconceitos</li>
+<li>✔ Evitar brigas</li>
+</ul>
+</section>
 
-        // Fechar se clicar fora do modal
-        window.addEventListener('click', (e) => {
-            if (e.target === cartModal) {
-                cartModal.style.display = 'none';
-            }
-        });
+<section id="matricula" class="fade">
+<h2>📩 matricula</h2>
 
-        // Adicionar ao carrinho
-        const addToCartButtons = document.querySelectorAll('.add-to-cart');
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const name = button.getAttribute('data-name');
-                const price = parseFloat(button.getAttribute('data-price'));
-                
-                addItemToCart(name, price);
-            });
-        });
+<form id="form" action="https://formsubmit.co/vcerejeiras@gmail.com" method="POST">
 
-        function addItemToCart(name, price) {
-            const existingItem = cart.find(item => item.name === name);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ name, price, quantity: 1 });
-            }
-            
-            updateCartUI();
-        }
+<input type="text" name="Nome" placeholder="Seu nome" required>
+<input type="number" name="Idade" placeholder="Idade" required>
+<textarea name="Motivo" placeholder="Por que quer entrar?" required></textarea>
 
-        // Atualizar a interface do carrinho
-        function updateCartUI() {
-            const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            
-            cartItemsContainer.innerHTML = '';
-            
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p style="color: var(--text-brown); text-align: center;">Seu carrinho está vazio.</p>';
-                cartTotalValue.textContent = 'R$ 0,00';
-                return;
-            }
-            
-            let totalValue = 0;
-            
-            cart.forEach(item => {
-                const itemRow = document.createElement('div');
-                itemRow.classList.add('cart-item-row');
-                
-                const itemTotal = item.price * item.quantity;
-                totalValue += itemTotal;
-                
-                itemRow.innerHTML = `
-                    <div>
-                        <strong>${item.name}</strong> <br>
-                        <small>${item.quantity}x R$ ${item.price.toFixed(2).replace('.', ',')}</small>
-                    </div>
-                    <span>R$ ${itemTotal.toFixed(2).replace('.', ',')}</span>
-                `;
-                
-                cartItemsContainer.appendChild(itemRow);
-            });
-            
-            cartTotalValue.textContent = `R$ ${totalValue.toFixed(2).replace('.', ',')}`;
-        }
+<input type="hidden" name="_captcha" value="false">
 
-        // Finalizar pedido
-        checkoutButton.addEventListener('click', () => {
-            if(cart.length === 0) {
-                alert("Seu carrinho está vazio!");
-                return;
-            }
-            alert("Mmm... Pedido simulado com sucesso! Obrigado por comprar na Mmm... Doces.");
-            cart = [];
-            updateCartUI();
-            cartModal.style.display = 'none';
-        });
-    </script>
+<button type="submit">Enviar</button>
+
+</form>
+
+<p class="success" id="msg">✅ Inscrição enviada com sucesso!</p>
+</section>
+
+<script>
+// pétalas
+for(let i=0;i<40;i++){
+let p=document.createElement("div");
+p.className="petal";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(4+Math.random()*6)+"s";
+document.body.appendChild(p);
+}
+
+// partículas
+for(let i=0;i<30;i++){
+let s=document.createElement("div");
+s.className="sparkle";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDuration=(2+Math.random()*3)+"s";
+document.body.appendChild(s);
+}
+
+// animação scroll
+const faders=document.querySelectorAll(".fade");
+window.addEventListener("scroll",()=>{
+faders.forEach(el=>{
+if(el.getBoundingClientRect().top<window.innerHeight-50){
+el.classList.add("show");
+}
+});
+});
+
+// copiar IP
+function copyIP(){
+navigator.clipboard.writeText("bawmc.net");
+alert("IP copiado!");
+}
+
+// mensagem
+document.getElementById("form").addEventListener("submit", function(){
+setTimeout(()=>{
+document.getElementById("msg").style.display="block";
+},500);
+});
+</script>
+
 </body>
 </html>
